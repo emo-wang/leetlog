@@ -4,8 +4,8 @@ import Nav from '@components/Nav';
 import Provider from '@components/Provider';
 
 export const metadata = {
-    title: 'Promptopia',
-    description: 'Discover & Share AI Prompts',
+    title: 'Leetlog',
+    description: 'Leetlog is a tool to record your leetcode more scientifically and efficiently.',
 }
 
 const RootLayout = ({ children }) => {

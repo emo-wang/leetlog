@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "ag-grid-react": "^31.2.0",
     "bcrypt": "^5.1.1",
     "mongodb": "^6.5.0",
     "mongoose": "^8.2.4",
