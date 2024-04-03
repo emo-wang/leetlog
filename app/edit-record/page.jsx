@@ -2,7 +2,7 @@
 
 import { useSession } from 'next-auth/react'
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Form from "@components/Form";
 import { formatDate } from "@utils/formatDate";
 
@@ -44,7 +44,7 @@ const CreateRecord = () => {
 
   return (
     <Form
-      type='Create'
+      type='Edit'
       record={record}
       setRecord={setRecord}
       submitting={submitting}

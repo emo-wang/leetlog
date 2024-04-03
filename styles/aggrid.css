@@ -1,0 +1,9 @@
+.ag-theme-quartz, .ag-theme-quartz-dark {
+    --ag-range-selection-border-color: rgb(0, 164, 193);
+    --ag-range-selection-border-style: dashed;
+    --ag-range-selection-background-color: rgb(255, 0, 128, 0.1);
+    --ag-range-selection-background-color-2: rgb(255, 0, 128, 0.19);
+    --ag-range-selection-background-color-3: rgb(255, 0, 128, 0.27);
+    --ag-range-selection-background-color-4: rgb(255, 0, 128, 0.34);
+    --ag-range-selection-highlight-color: rgba(127, 173, 106, 0.3);
+}

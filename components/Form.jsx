@@ -1,48 +1,107 @@
 import Link from "next/link";
 
-const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
+const Form = ({ type, record, setRecord, submitting, handleSubmit }) => {
 	return (
 		<section className='w-full max-w-full flex-start flex-col'>
 			<h1 className='head_text text-left'>
-				<span className='blue_gradient'>{type} Post</span>
+				<span className='blue_gradient'>{type} Record</span>
 			</h1>
-			<p className='desc text-left max-w-md'>
-				{type} and share amazing prompts with the world, and let your
-				imagination run wild with any AI-powered platform
-			</p>
 
 			<form
 				onSubmit={handleSubmit}
-				className='mt-10 w-full max-w-2xl flex flex-col gap-7 glassmorphism'
+				className='mt-10 w-full max-w-3xl flex flex-col gap-7 glassmorphism'
 			>
 				<label>
 					<span className='font-satoshi font-semibold text-base text-gray-700'>
-						Your AI Prompt
+						Title
 					</span>
-
-					<textarea
-						value={post.prompt}
-						onChange={(e) => setPost({ ...post, prompt: e.target.value })}
-						placeholder='Write your post here'
+					<input
+						value={record.title}
+						onChange={(e) => setRecord({ ...record, title: e.target.value })}
+						type='text'
 						required
-						className='form_textarea '
+						className='form_input'
 					/>
 				</label>
+				<div className='w-full max-w-7xl flex gap-6'>
+					<label>
+						<span className='font-satoshi font-semibold text-base text-gray-700'>
+							Difficulty
+						</span>
+						<select
+							value={record.difficulty}
+							onChange={(e) => { console.log(e.target.value);; setRecord({ ...record, difficulty: e.target.value }) }}
+							type='number'
+							required
+							className='form_input'
+						>
+							<option value={0}>0 for easiest</option>
+							<option value={1}>1</option>
+							<option value={2}>2</option>
+							<option value={3}>3</option>
+							<option value={4}>4 for hardest</option>
+						</select>
+					</label>
+					<label>
+						<span className='font-satoshi font-semibold text-base text-gray-700'>
+							Priority
+						</span>
+						<select
+							value={record.priority}
+							onChange={(e) => setRecord({ ...record, priority: e.target.value })}
+							type='number'
+							required
+							className='form_input'
+						>
+							<option value={0}>0 for lowest priority</option>
+							<option value={1}>1</option>
+							<option value={2}>2</option>
+							<option value={3}>3</option>
+							<option value={4}>4 for highest priority</option>
+						</select>
+					</label>
+					<label>
+						<span className='font-satoshi font-semibold text-base text-gray-700'>
+							Status
+						</span>
+						<select
+							value={record.status}
+							onChange={(e) => setRecord({ ...record, status: e.target.value })}
+							type='text'
+							required
+							className='form_input'
+						>
+							<option value={'Solved'}>Solved but not best</option>
+							<option value={'Unsolved'}>Unsolved</option>
+							<option value={'Best Solution'}>Best Solution</option>
+						</select>
+					</label>
+					<label>
+						<span className='font-satoshi font-semibold text-base text-gray-700'>
+							Dates
+						</span>
+						<input
+							value={record.dates}
+							onChange={(e) => setRecord({ ...record, dates: e.target.value })}
+							type='date'
+							required
+							className='form_input'
+						/>
+					</label>
+				</div>
 
 				<label>
 					<span className='font-satoshi font-semibold text-base text-gray-700'>
-						Field of Prompt{" "}
+						Field of Notes{" "}
 						<span className='font-normal'>
-							(#product, #webdevelopment, #idea, etc.)
+							(#key word, #catgorey, #short hint, etc. Better not to paste detail solution)
 						</span>
 					</span>
-					<input
-						value={post.tag}
-						onChange={(e) => setPost({ ...post, tag: e.target.value })}
-						type='text'
-						placeholder='#Tag'
-						required
-						className='form_input'
+					<textarea
+						value={record.notes}
+						onChange={(e) => setRecord({ ...record, notes: e.target.value })}
+						placeholder='Write your notes here'
+						className='form_textarea '
 					/>
 				</label>
 
