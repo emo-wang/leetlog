@@ -1,9 +1,9 @@
 'use client'
 
 import Link from 'next/link';
-import { useState, useMemo, useEffect, useCallback, useRef } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
 import { useSession } from 'next-auth/react';
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { AgGridReact } from 'ag-grid-react';
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-quartz.css";
@@ -20,8 +20,7 @@ const LeetTable = () => {
   const containerStyle = useMemo(() => ({ width: "100%", height: "100%" }), []);
   const gridStyle = useMemo(() => ({ height: "100%", width: "100%" }), []);
   const { data: session } = useSession();
-  const [rowData, setRowData] = useState([
-  ]);
+  const [rowData, setRowData] = useState([]);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -39,7 +38,7 @@ const LeetTable = () => {
       { field: "difficulty", flex: 1, cellRenderer: difficultyRenderer, },
       { field: "priority", flex: 1, cellRenderer: priorityRenderer },
       { field: "status", flex: 1, cellRenderer: statusRenderer },
-      { field: "dates", flex: 2, cellRenderer: datesRenderer },
+      { field: "dates", flex: 2, cellRenderer: ()=>datesRenderer() },
       { field: 'notes', flex: 1, cellRenderer: notesRenderer }
     ]
   }, [])
@@ -49,63 +48,58 @@ const LeetTable = () => {
       filter: 'agTextColumnFilter',
       floatingFilter: true,
       minWidth: 100,
-      cellStyle: { display: 'flex', alignItems: 'center' }
+      cellStyle: { display: 'flex', alignItems: 'center', textOverflow: 'ellipsis' }
     }
   }, []);
 
-  const onSelectionChanged = useCallback(() => {
-    console.log(gridRef.current.api.getSelectedRows());
-  }, [])
-
-  const handleEditRecord = (event) => {
+  const handleEditRecord = () => {
     if (gridRef.current.api.getSelectedRows().length !== 1) {
-      alert('Please select one row');
+      alert('Please select one row to edit.');
       return
     }
 
-    router.push("/edit-record")
+    const record = gridRef.current.api.getSelectedRows()[0]
+    router.push(`/edit-record?id=${record._id}`)
   }
 
-  const handldDeleteRecord = (event) => {
-    const text = prompt(`Type "delete" if you want to delete this record`);
-    if (text === 'delete') {
-      console.log('delete successfully');
+  const handldDeleteRecord = async (event) => {
+    if (gridRef.current.api.getSelectedRows().length !== 1) {
+      alert('Please select one row to delete.');
+      return
+    }
+    const record = gridRef.current.api.getSelectedRows()[0]
+    const hasConfirmed = confirm(
+      "Are you sure you want to delete this prompt?"
+    );
+
+    if (hasConfirmed) {
+      try {
+        await fetch(`/api/record/${record._id.toString()}`, {
+          method: "DELETE",
+        });
+
+        const filteredRowData = rowData.filter((item) => item._id !== record._id);
+
+        setRowData(filteredRowData);
+      } catch (error) {
+        console.log(error);
+      }
     } else {
-      console.log('delete cancelled');
+      console.log('delete cancelled.');
     }
   }
 
   return (
-    <div
-      className="ag-theme-quartz w-full"
-    >
+    <div className="ag-theme-quartz w-full">
       <div className='flex gap-3 md:gap-5 mb-5'>
         <Link
           href='/create-record'
         >
-          <button
-            type='button'
-            className='black_btn '
-          >
-            Create Record
-          </button>
+          <button type='button' className='black_btn '>Create Record</button>
         </Link>
-        <button
-          type='button'
-          onClick={handleEditRecord}
-          className='outline_btn'
-        >
-          Edit
-        </button>
-        <button
-          type='button'
-          onClick={handldDeleteRecord}
-          className='outline_btn'
-        >
-          Delete
-        </button>
-      </div>
-
+        <button type='button' onClick={handleEditRecord} className='outline_btn'>Edit</ button>
+        <button type='button' onClick={handldDeleteRecord} className='outline_btn'>Delete</button>
+      </ div>
       <div style={containerStyle}>
         <div
           style={{ ...gridStyle, height: 700 }}
@@ -122,7 +116,6 @@ const LeetTable = () => {
             pagination={true}
             paginationPageSize={10}
             paginationPageSizeSelector={[10, 25, 50]}
-            onSelectionChanged={onSelectionChanged}
           />
         </div>
       </div>

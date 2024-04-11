@@ -16,7 +16,7 @@ export const GET = async (request, { params }) => {
 }
 
 export const PATCH = async (request, { params }) => {
-    const { Record, tag } = await request.json();
+    const { title, attempts, difficulty, priority, status, dates, notes } = await request.json();
 
     try {
         await connectToDB();
@@ -29,13 +29,19 @@ export const PATCH = async (request, { params }) => {
         }
 
         // Update the Record with new data
-        existingRecord.Record = Record;
-        existingRecord.tag = tag;
+        existingRecord.title = title;
+        existingRecord.attempts = attempts;
+        existingRecord.difficulty = difficulty;
+        existingRecord.priority = priority;
+        existingRecord.status = status;
+        existingRecord.dates = dates;
+        existingRecord.notes = notes;
 
         await existingRecord.save();
 
         return new Response("Successfully updated the Records", { status: 200 });
     } catch (error) {
+        console.log(error);
         return new Response("Error Updating Record", { status: 500 });
     }
 };

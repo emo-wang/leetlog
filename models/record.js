@@ -11,24 +11,28 @@ const RecordSchema = new Schema({
         // unique: [true, 'Title already exists!'],
         required: [true, 'Title is required!'],
     },
-    attempts: {
-        type: Number,
-        default: 1,
-    },
+    // 0-4
     difficulty: {
         type: Number,
         required: [true, 'Difficulty is required!'],
     },
+    //0-4
     priority: {
         type: Number,
         required: [true, 'Priority is required!'],
     },
+    // Solved, Unsolved, Best Solution
     status: {
-        type: String,
+        type: Number,
         required: [true, 'Status is required!'],
     },
+    // 
+    attempts: {
+        type: [Number],
+        required: [true, 'Attempts is required!'],
+    },
     dates: {
-        type: Number,
+        type: [String],
         required: [true, 'Dates is required!'],
     },
     notes: {

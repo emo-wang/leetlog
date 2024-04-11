@@ -1,6 +1,6 @@
 "use client";
 
-import { useSession } from 'next-auth/react'
+import { useSession } from 'next-auth/react';
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Form from "@components/Form";
@@ -11,7 +11,7 @@ const CreateRecord = () => {
   const { data: session } = useSession()
   const [submitting, setsubmitting] = useState(false);
   const [record, setRecord] = useState(
-    { title: "", difficulty: 0, priority: 0, status: "Best Solution", attempts: 0, dates: formatDate(new Date()), notes: '' }
+    { title: "", difficulty: 0, priority: 0, status: 2, attempts: [2], dates: formatDate(new Date()), notes: '' }
   )
 
   const handleSubmit = async (e) => {
@@ -23,8 +23,8 @@ const CreateRecord = () => {
         body: JSON.stringify({
           ...record,
           userId: session?.user.id,
-          dates: new Date(record.dates).getTime(),
-          attempts: record.status !== "Unsolved" ? 1 : 0
+          dates: [record.dates],
+          attempts: [record.status]
         })
       })
 

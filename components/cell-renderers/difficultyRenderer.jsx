@@ -11,17 +11,17 @@ export default (params) => {
         }
         case 1: {
             return (
-                <Chip label={'middle-'} style={{ color: 'white', backgroundColor: '#82a745' }} color="success" size="small" />
+                <Chip label={'medium-'} style={{ color: 'white', backgroundColor: '#82a745' }} color="success" size="small" />
             );
         }
         case 2: {
             return (
-                <Chip label={'middle'} style={{ color: 'white', backgroundColor: '#a7a345' }} size="small" />
+                <Chip label={'medium'} style={{ color: 'white', backgroundColor: '#a7a345' }} size="small" />
             );
         }
         case 3: {
             return (
-                <Chip label={'middle+'} style={{ color: 'white', backgroundColor: "#df5406" }} size="small" />
+                <Chip label={'medium+'} style={{ color: 'white', backgroundColor: "#df5406" }} size="small" />
             );
         }
         case 4: {

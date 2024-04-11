@@ -1,56 +1,59 @@
 "use client";
 
-import { useSession } from 'next-auth/react'
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Form from "@components/Form";
 import { formatDate } from "@utils/formatDate";
 
-const CreateRecord = () => {
-  const router = useRouter();
-  const { data: session } = useSession()
-  const [submitting, setsubmitting] = useState(false);
-  const [record, setRecord] = useState(
-    { title: "", difficulty: 0, priority: 0, status: "Best Solution", attempts: 0, dates: formatDate(new Date()), notes: '' }
-  )
+const EditRecord = () => {
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const recordId = searchParams.get("id");
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+    const [submitting, setSubmitting] = useState(false);
+    const [record, setRecord] = useState({ title: "", difficulty: 0, priority: 0, status: 2, attempts: [2], dates: [formatDate(new Date())], notes: '' })
 
-    try {
-      const response = await fetch('/api/record/new', {
-        method: 'POST',
-        body: JSON.stringify({
-          ...record,
-          userId: session?.user.id,
-          dates: new Date(record.dates).getTime(),
-          attempts: record.status !== "Unsolved" ? 1 : 0
-        })
-      })
+    useEffect(() => {
+        const getRecordDetails = async () => {
+            const response = await fetch(`/api/record/${recordId}`);
+            const data = await response.json();
+            setRecord(data);
+        };
 
-      if (response.ok) {
-        router.push('/')
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setsubmitting(false)
+        if (recordId) getRecordDetails();
+    }, [recordId]);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setSubmitting(true);
+
+        if (!recordId) return alert("Missing RecordId!");
+
+        try {
+            const response = await fetch(`/api/record/${recordId}`, {
+                method: "PATCH",
+                body: JSON.stringify(record),
+            });
+
+            if (response.ok) {
+                router.push("/");
+            }
+        } catch (error) {
+            console.log(error);
+        } finally {
+            setSubmitting(false);
+        }
     }
-  }
 
-  useEffect(() => {
-
-  }, []);
-
-  return (
-    <Form
-      type='Edit'
-      record={record}
-      setRecord={setRecord}
-      submitting={submitting}
-      handleSubmit={handleSubmit}
-    />
-  );
+    return (
+        <Form
+            type='Edit'
+            record={record}
+            setRecord={setRecord}
+            submitting={submitting}
+            handleSubmit={handleSubmit}
+        />
+    );
 };
 
-export default CreateRecord;
+export default EditRecord;
