@@ -28,6 +28,10 @@ export const PATCH = async (request, { params }) => {
             return new Response("Record not found", { status: 404 });
         }
 
+        if (attempts.length === 0 || dates.length === 0) {
+            return new Response("Must have at least one history record", { status: 500 });
+        }
+
         // Update the Record with new data
         existingRecord.title = title;
         existingRecord.attempts = attempts;

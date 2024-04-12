@@ -38,7 +38,7 @@ const LeetTable = () => {
       { field: "difficulty", flex: 1, cellRenderer: difficultyRenderer, },
       { field: "priority", flex: 1, cellRenderer: priorityRenderer },
       { field: "status", flex: 1, cellRenderer: statusRenderer },
-      { field: "dates", flex: 2, cellRenderer: ()=>datesRenderer() },
+      { field: "dates", flex: 2, cellRenderer: datesRenderer },
       { field: 'notes', flex: 1, cellRenderer: notesRenderer }
     ]
   }, [])

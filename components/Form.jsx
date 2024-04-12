@@ -7,10 +7,8 @@ import Stack from '@mui/material/Stack';
 import { Tooltip } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
 import AddIcon from '@mui/icons-material/Add';
-import CheckIcon from '@mui/icons-material/Check';
 import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
-import DeleteIcon from '@mui/icons-material/Delete';
 import { formatDate } from "@utils/formatDate";
 
 const Form = ({ type, record, setRecord, submitting, handleSubmit }) => {
