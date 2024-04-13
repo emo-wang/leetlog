@@ -4,6 +4,7 @@ const RecordSchema = new Schema({
     creator: {
         type: Schema.Types.ObjectId,
         ref: 'User',
+        required:[true, 'User is required']
     },
     title: {
         type: String,

@@ -35,6 +35,7 @@ const Form = ({ type, record, setRecord, submitting, handleSubmit }) => {
 	const handleAddHistory = (e) => {
 		e.preventDefault()
 		setRecord(prev => ({ ...prev, dates: [...prev.dates, newHistory.dates], attempts: [...prev.attempts, newHistory.attempts] }))
+		setIsAddingHistory(false)
 	}
 
 	const handleDeleteHistory = (e) => {
@@ -50,6 +51,7 @@ const Form = ({ type, record, setRecord, submitting, handleSubmit }) => {
 				attempts: prev.attempts.filter((item, index) => index !== curHistoryIndex)
 			}
 		})
+		setIsEdittingHistory(false)
 	}
 
 
