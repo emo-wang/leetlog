@@ -8,8 +8,6 @@ const RecordSchema = new Schema({
     },
     title: {
         type: String,
-        // TODO: title和creator的组合键唯一
-        // unique: [true, 'Title already exists!'],
         required: [true, 'Title is required!'],
     },
     // 0-4
@@ -40,6 +38,9 @@ const RecordSchema = new Schema({
         type: String,
     },
 });
+
+// 添加组合唯一索引
+RecordSchema.index({ creator: 1, title: 1 }, { unique: true });
 
 const Record = models.Record || model("Record", RecordSchema);
 

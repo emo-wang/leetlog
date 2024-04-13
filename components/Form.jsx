@@ -170,8 +170,8 @@ const Form = ({ type, record, setRecord, submitting, handleSubmit }) => {
 									</ Tooltip>)
 							}
 							)}
-							<IconButton size="small" aria-label="add to shopping cart" >
-								<AddIcon onClick={(e) => handleAddOpen(e)} />
+							<IconButton size="small" aria-label="add to shopping cart" onClick={(e) => handleAddOpen(e)} >
+								<AddIcon/>
 							</IconButton>
 						</Stack>
 					</label>
