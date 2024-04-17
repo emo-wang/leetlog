@@ -91,7 +91,7 @@ const LeetTable = () => {
 
   return (
     <div className="ag-theme-quartz w-full">
-      <div className='flex gap-3 md:gap-5 mb-5'>
+      {session?.user.id ? (<div className='flex gap-3 md:gap-5 mb-5'>
         <Link
           href='/create-record'
         >
@@ -99,7 +99,9 @@ const LeetTable = () => {
         </Link>
         <button type='button' onClick={handleEditRecord} className='outline_btn'>Edit</ button>
         <button type='button' onClick={handldDeleteRecord} className='outline_btn'>Delete</button>
-      </ div>
+      </ div>) :
+        (<div className='logo_text'>Please sign in to see more data!</ div>)}
+
       <div style={containerStyle}>
         <div
           style={{ ...gridStyle, height: 700 }}
