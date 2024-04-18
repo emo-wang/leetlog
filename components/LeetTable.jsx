@@ -13,6 +13,7 @@ import statusRenderer from './cell-renderers/statusRenderer';
 import difficultyRenderer from './cell-renderers/difficultyRenderer';
 import priorityRenderer from './cell-renderers/priorityRenderer';
 import notesRenderer from './cell-renderers/notesRenderer';
+import compareDates from '@utils/compareDates';
 
 const LeetTable = () => {
   const router = useRouter();
@@ -26,6 +27,15 @@ const LeetTable = () => {
     const fetchPosts = async () => {
       const response = await fetch(`/api/users/${session?.user.id}/records`);
       const data = await response.json();
+      data.sort((nodeA, nodeB) => {
+        nodeA.dates.sort(compareDates)
+        nodeB.dates.sort(compareDates)
+        if (compareDates(nodeA.dates[0], nodeB.dates[0]) === -1) {
+          return -1
+        } else {
+          return 1
+        }
+      })
       setRowData(data)
     };
 
